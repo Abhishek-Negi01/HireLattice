@@ -45,6 +45,142 @@ The backend is complete when it can:
 
 ---
 
+# Final Backend Folder Structure
+
+```text
+backend/
+│
+├── node_modules/
+│
+├── prisma/
+│   ├── migrations/
+│   ├── schema.prisma
+│   └── seed.js
+│
+├── src/
+│   │
+│   ├── index.js
+│   ├── app.js
+│   │
+│   ├── config/
+│   │   ├── clerk.js
+│   │   ├── cloudinary.js
+│   │   ├── env.js
+│   │   ├── gemini.js
+│   │   ├── groq.js
+│   │   ├── mongodb.js
+│   │   ├── prisma.js
+│   │   └── qdrant.js
+│   │
+│   ├── constants/
+│   │   ├── prompts.js
+│   │   ├── rankingWeights.js
+│   │   ├── resumeStatus.js
+│   │   └── roles.js
+│   │
+│   ├── middlewares/
+│   │   ├── auth.middleware.js
+│   │   ├── error.middleware.js
+│   │   ├── role.middleware.js
+│   │   ├── upload.middleware.js
+│   │   └── validate.middleware.js
+│   │
+│   ├── modules/
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── auth.controller.js
+│   │   │   ├── auth.routes.js
+│   │   │   └── auth.service.js
+│   │   │
+│   │   ├── candidate/
+│   │   │   ├── candidate.controller.js
+│   │   │   ├── candidate.repository.js
+│   │   │   ├── candidate.routes.js
+│   │   │   └── candidate.service.js
+│   │   │
+│   │   ├── resume/
+│   │   │   ├── bulkUpload.service.js
+│   │   │   ├── resume.controller.js
+│   │   │   ├── resume.repository.js
+│   │   │   ├── resume.routes.js
+│   │   │   └── resume.service.js
+│   │   │
+│   │   ├── job/
+│   │   │   ├── job.controller.js
+│   │   │   ├── job.repository.js
+│   │   │   ├── job.routes.js
+│   │   │   └── job.service.js
+│   │   │
+│   │   ├── search/
+│   │   │   ├── search.controller.js
+│   │   │   ├── search.routes.js
+│   │   │   └── search.service.js
+│   │   │
+│   │   └── ranking/
+│   │       ├── ranking.controller.js
+│   │       ├── ranking.repository.js
+│   │       ├── ranking.routes.js
+│   │       └── ranking.service.js
+│   │
+│   ├── prompts/
+│   │   ├── explanation.prompt.js
+│   │   ├── jd.prompt.js
+│   │   └── resume.prompt.js
+│   │
+│   ├── routes/
+│   │   └── index.js
+│   │
+│   ├── services/
+│   │   │
+│   │   ├── ai/
+│   │   │   ├── explanationGenerator.js
+│   │   │   ├── jdParser.js
+│   │   │   ├── llmProvider.js
+│   │   │   └── resumeParser.js
+│   │   │
+│   │   ├── embeddings/
+│   │   │   ├── candidateEmbedding.js
+│   │   │   ├── jobEmbedding.js
+│   │   │   └── vectorStore.js
+│   │   │
+│   │   ├── preprocessing/
+│   │   │   ├── cleanResume.js
+│   │   │   ├── docxExtractor.js
+│   │   │   ├── duplicateDetector.js
+│   │   │   ├── normalizeResume.js
+│   │   │   ├── pdfExtractor.js
+│   │   │   └── preprocessPipeline.js
+│   │   │
+│   │   └── ranking/
+│   │       ├── hybridRanking.js
+│   │       ├── rankingEngine.js
+│   │       ├── scoringEngine.js
+│   │       └── semanticSearch.js
+│   │
+│   ├── utils/
+│   │   ├── apiResponse.js
+│   │   ├── asyncHandler.js
+│   │   ├── companyNormalizer.js
+│   │   ├── cosineSimilarity.js
+│   │   ├── fileValidator.js
+│   │   ├── hashResume.js
+│   │   ├── logger.js
+│   │   └── skillNormalizer.js
+│   │
+│   └── validations/
+│       ├── auth.validation.js
+│       ├── job.validation.js
+│       ├── resume.validation.js
+│       └── search.validation.js
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
+```
+
 # DAY 1 — Infrastructure & AI Ingestion Pipeline
 
 ---

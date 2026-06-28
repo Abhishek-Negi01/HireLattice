@@ -142,7 +142,6 @@ The result is a recruiter-friendly shortlist with transparent reasoning.
 ## Recruiter
 
 - Secure Authentication
-- Company Dashboard
 - Create Job Posts
 - AI Job Description Analysis
 - Bulk Resume Upload
@@ -151,11 +150,7 @@ The result is a recruiter-friendly shortlist with transparent reasoning.
 - Semantic Candidate Search
 - Hybrid AI Ranking
 - Resume Viewer
-- Candidate Comparison
 - Candidate Shortlisting
-- Interview Scheduling
-- Candidate Feedback
-- Hiring Analytics
 - AI Ranking Explanation
 
 ---
@@ -169,8 +164,6 @@ The result is a recruiter-friendly shortlist with transparent reasoning.
 - AI Generated Profile
 - Resume History
 - Job Applications
-- Interview Status
-- Application Tracking
 
 ---
 
@@ -209,8 +202,6 @@ Candidate
 
 Recruiter
 
-Company
-
 Job
 
 Resume
@@ -218,10 +209,6 @@ Resume
 Search
 
 Ranking
-
-Recommendation
-
-Interview
 
 ──────────────────────────────────────────────────
 
@@ -244,10 +231,6 @@ Matching Engine
 ↓
 
 Ranking Engine
-
-↓
-
-Recommendation Engine
 
 ↓
 
@@ -581,14 +564,6 @@ Shortlist
 
 ↓
 
-Interview
-
-↓
-
-Feedback
-
-↓
-
 Hiring
 
 ---
@@ -616,14 +591,6 @@ Candidate Profile Generated
 ↓
 
 Apply for Jobs
-
-↓
-
-Track Applications
-
-↓
-
-Receive Interview Updates
 
 ---
 

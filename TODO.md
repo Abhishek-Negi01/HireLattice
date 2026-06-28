@@ -537,22 +537,7 @@ Store
 
 Ranking Table
 
----
-
-# Phase 12 — Recommendation Engine
-
-Generate
-
-- Top Candidates
-- Hidden Gems
-- Alternative Candidates
-- Similar Candidates
-
-Store recommendations.
-
----
-
-# Phase 13 — Explainability Engine
+# Phase 12 — Explainability Engine
 
 Generate
 
@@ -566,7 +551,7 @@ Every ranked candidate must contain explainable output.
 
 ---
 
-# Phase 14 — Backend APIs
+# Phase 13 — Backend APIs
 
 Recruiter APIs
 
@@ -591,7 +576,7 @@ Shared APIs
 
 ---
 
-# Phase 15 — Testing
+# Phase 14 — Testing
 
 Test
 
@@ -621,7 +606,7 @@ API Validation
 
 ---
 
-# Phase 16 — Deployment
+# Phase 15 — Deployment
 
 Deploy Backend
 
@@ -694,23 +679,6 @@ Verify
 
 - Generate Ranking
 - Get Ranking
-
----
-
-## Recommendation
-
-- Generate Recommendations
-- Retrieve Recommendations
-
----
-
-## Interview
-
-- Create
-- Update
-- Feedback
-
----
 
 # Edge Cases
 

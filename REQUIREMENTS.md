@@ -89,21 +89,6 @@ Candidate
 - Logout
 - Password Recovery (handled by Clerk)
 
----
-
-## Company Module
-
-The application is company-centric.
-
-Features
-
-- Company Profile
-- Recruiter Management
-- Departments
-- Hiring Teams
-
----
-
 ## Job Module
 
 Recruiter should be able to
@@ -236,19 +221,6 @@ Return
 
 Top Ranked Candidates
 
----
-
-## Recommendation Module
-
-System should recommend
-
-- Best Candidates
-- Similar Candidates
-- Hidden Gems
-- Alternative Candidates
-
----
-
 ## Explainability Module
 
 Every ranked candidate should contain
@@ -275,23 +247,6 @@ Recruiter
 - Accept
 - Reject
 - Shortlist
-
----
-
-## Interview Module
-
-Recruiter should
-
-- Schedule Interview
-- Update Status
-- Add Feedback
-
-Candidate should
-
-- View Interview
-- Track Status
-
----
 
 ## Dashboard
 
@@ -654,12 +609,6 @@ Candidate
 /api/candidate
 ```
 
-Company
-
-```text
-/api/company
-```
-
 Jobs
 
 ```text
@@ -682,18 +631,6 @@ Ranking
 
 ```text
 /api/ranking
-```
-
-Recommendation
-
-```text
-/api/recommendation
-```
-
-Interview
-
-```text
-/api/interview
 ```
 
 Search

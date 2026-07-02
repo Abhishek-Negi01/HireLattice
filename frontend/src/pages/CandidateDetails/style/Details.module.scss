@@ -1,0 +1,115 @@
+@import "@/styles/base/variables";
+@import "@/styles/base/mixins";
+
+.detailsHeader {
+  background-color: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  @include mobile {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+.name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $text;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: $text-muted;
+
+  a {
+    color: var(--primary);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 2rem;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-left: 2px solid $border;
+  padding-left: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.timelineItem {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.5rem - 6px);
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    border: 2px solid $surface;
+  }
+}
+
+.timelineTitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: $text;
+}
+
+.timelineSubtitle {
+  font-size: 0.8125rem;
+  color: $text-muted;
+  margin-top: 0.25rem;
+}
+
+.timelineDesc {
+  font-size: 0.875rem;
+  color: $text-muted;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}

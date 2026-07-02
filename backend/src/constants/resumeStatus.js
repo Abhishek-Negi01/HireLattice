@@ -1,0 +1,8 @@
+const RESUME_STATUS = {
+  UPLOADED: "UPLOADED",
+  PARSED: "PARSED",
+  INDEXED: "INDEXED",
+  FAILED: "FAILED",
+};
+
+export default RESUME_STATUS;

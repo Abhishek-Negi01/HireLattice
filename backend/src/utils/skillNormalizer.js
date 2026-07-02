@@ -1,0 +1,62 @@
+// Common aliases → canonical form
+const SKILL_MAP = {
+  nodejs: "Node.js",
+  "node js": "Node.js",
+  "node.js": "Node.js",
+  node: "Node.js",
+  reactjs: "React",
+  "react.js": "React",
+  "react js": "React",
+  nextjs: "Next.js",
+  "next js": "Next.js",
+  "next.js": "Next.js",
+  expressjs: "Express.js",
+  "express js": "Express.js",
+  express: "Express.js",
+  mongodb: "MongoDB",
+  mongo: "MongoDB",
+  "mongo db": "MongoDB",
+  postgresql: "PostgreSQL",
+  postgres: "PostgreSQL",
+  javascript: "JavaScript",
+  js: "JavaScript",
+  typescript: "TypeScript",
+  ts: "TypeScript",
+  python: "Python",
+  py: "Python",
+  java: "Java",
+  mysql: "MySQL",
+  redis: "Redis",
+  docker: "Docker",
+  kubernetes: "Kubernetes",
+  k8s: "Kubernetes",
+  graphql: "GraphQL",
+  html5: "HTML",
+  html: "HTML",
+  css3: "CSS",
+  css: "CSS",
+  tailwindcss: "Tailwind CSS",
+  tailwind: "Tailwind CSS",
+  aws: "AWS",
+  "amazon web services": "AWS",
+  gcp: "GCP",
+  "google cloud": "GCP",
+  azure: "Azure",
+  git: "Git",
+  restapi: "REST API",
+  "rest apis": "REST API",
+  rest: "REST API",
+  "machine learning": "Machine Learning",
+  ml: "Machine Learning",
+  "deep learning": "Deep Learning",
+  dl: "Deep Learning",
+};
+
+export const normalizeSkill = (skill) => {
+  const lower = skill.toLowerCase().trim();
+  return SKILL_MAP[lower] || skill.trim();
+};
+
+export const normalizeSkills = (skills = []) => [
+  ...new Set(skills.map(normalizeSkill).filter(Boolean)),
+];

@@ -1,0 +1,8 @@
+@import "./base/variables";
+@import "./base/mixins";
+@import "./base/reset";
+@import "./base/typography";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

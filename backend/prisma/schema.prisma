@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Candidate {
+  id          String   @id @default(uuid())
+  clerkId     String   @unique
+  email       String   @unique
+  firstName   String
+  lastName    String
+  phone       String?
+  linkedinUrl String?
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  resumes  Resume[]
+  rankings Ranking[]
+}
+
+model Resume {
+  id               String       @id @default(uuid())
+  candidateId      String
+  fileUrl          String
+  fileType         String
+  fileHash         String       @unique
+  originalFileName String?
+  status           ResumeStatus @default(UPLOADED)
+  embeddingPointId String?
+  isActive         Boolean      @default(true)
+  parsedAt         DateTime?
+  indexedAt        DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+model Job {
+  id               String    @id @default(uuid())
+  title            String
+  description      String
+  department       String?
+  location         String?
+  employmentType   String?
+  status           JobStatus @default(ACTIVE)
+  embeddingPointId String?
+  parsedAt         DateTime?
+  indexedAt        DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  rankings Ranking[]
+}
+
+model Ranking {
+  id              String   @id @default(uuid())
+  jobId           String
+  candidateId     String
+  rank            Int
+  overallScore    Float
+  semanticScore   Float?
+  skillsScore     Float?
+  experienceScore Float?
+  educationScore  Float?
+  behaviorScore   Float?
+  projectsScore   Float?
+  resumeQuality   Float?
+  createdAt       DateTime @default(now())
+
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, candidateId])
+  @@index([jobId])
+}
+
+enum ResumeStatus {
+  UPLOADED
+  PARSED
+  INDEXED
+  FAILED
+}
+
+enum JobStatus {
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}

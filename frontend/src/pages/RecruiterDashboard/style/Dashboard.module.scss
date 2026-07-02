@@ -1,0 +1,80 @@
+@import "@/styles/base/variables";
+@import "@/styles/base/mixins";
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background-color: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.statIcon {
+  font-size: 2.25rem;
+  color: var(--primary);
+  opacity: 0.85;
+}
+
+.statVal {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $text;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.8125rem;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.healthContainer {
+  background-color: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.healthGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.healthIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: $radius-md;
+  border: 1px solid $border;
+  background-color: $background;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  &.online {
+    background-color: $success;
+  }
+  &.offline {
+    background-color: $error;
+  }
+}

@@ -1,0 +1,149 @@
+@import "@/styles/base/variables";
+@import "@/styles/base/mixins";
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: $background;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: $surface;
+  border-right: 1px solid $border;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: transform 0.3s ease;
+
+  @include mobile {
+    position: fixed;
+    transform: translateX(-100%);
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidebarHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebarNav {
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  @include custom-scrollbar;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text-muted;
+  border-radius: $radius-md;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $background;
+    color: var(--primary);
+  }
+
+  &.active {
+    background-color: rgba(37, 99, 235, 0.08);
+    color: var(--primary);
+    font-weight: 600;
+  }
+}
+
+.mainContainer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.navbar {
+  height: 64px;
+  background-color: $surface;
+  border-bottom: 1px solid $border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.menuButton {
+  display: none;
+  font-size: 1.5rem;
+  color: $text;
+  cursor: pointer;
+
+  @include mobile {
+    display: block;
+  }
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.themeToggle {
+  color: $text-muted;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+  outline: none;
+
+  &:hover {
+    color: var(--primary);
+  }
+}
+
+.content {
+  padding: 2rem;
+  flex-grow: 1;
+  overflow-y: auto;
+
+  @include mobile {
+    padding: 1.25rem;
+  }
+}
+
+.footer {
+  background-color: $surface;
+  border-top: 1px solid $border;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: $text-muted;
+}

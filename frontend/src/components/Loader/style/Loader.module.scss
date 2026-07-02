@@ -1,0 +1,39 @@
+@import "@/styles/base/variables";
+@import "@/styles/base/mixins";
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  width: 100%;
+
+  &.fullscreen {
+    position: fixed;
+    inset: 0;
+    background-color: var(--background);
+    z-index: 9999;
+    height: 100vh;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid $border;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.text {
+  font-size: 0.875rem;
+  color: $text-muted;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

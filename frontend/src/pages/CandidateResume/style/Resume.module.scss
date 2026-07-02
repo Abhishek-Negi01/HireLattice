@@ -1,0 +1,33 @@
+@import "@/styles/base/variables";
+@import "@/styles/base/mixins";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+}
+
+.uploadSection {
+  background-color: $surface;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  padding: 2rem;
+}
+
+.activeResumeBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background-color: $surface;
+  gap: 1rem;
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

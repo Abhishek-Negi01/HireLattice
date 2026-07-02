@@ -3,6 +3,8 @@
 # HireLattice
 Video Presentation Drive Link - https://drive.google.com/drive/folders/1HCc0T1zv1jQ2E9HMJxVtAgzVIdmsr-DR?usp=sharing
 
+Website Link-https://hire-lattice.vercel.app/
+
 ### AI-Powered Candidate Intelligence & Recruitment Platform
 
 > **HireLattice** is an enterprise-grade AI recruitment platform that helps recruiters discover, rank, and evaluate candidates based on semantic understanding rather than keyword matching. It combines Large Language Models, Vector Search, Hybrid Ranking, and Behavioral Intelligence to produce explainable hiring recommendations.

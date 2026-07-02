@@ -1,6 +1,7 @@
 # README.md
 
 # HireLattice
+Video Presentation Drive Link - https://drive.google.com/drive/folders/1HCc0T1zv1jQ2E9HMJxVtAgzVIdmsr-DR?usp=sharing
 
 ### AI-Powered Candidate Intelligence & Recruitment Platform
 

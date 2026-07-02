@@ -7,35 +7,43 @@ const ALLOWED_MIMES = [
   "application/x-zip-compressed",
 ];
 
+const CSV_MIMES = ["text/csv", "application/csv", "text/plain"];
+
 const fileFilter = (req, file, cb) => {
-  if (ALLOWED_MIMES.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
+  if (ALLOWED_MIMES.includes(file.mimetype)) cb(null, true);
+  else
     cb(
       new Error(
         `Unsupported file type: ${file.mimetype}. Allowed: PDF, DOCX, ZIP`,
       ),
       false,
     );
-  }
 };
 
-// Memory storage — buffer is processed before Cloudinary upload
+const csvFilter = (req, file, cb) => {
+  if (CSV_MIMES.includes(file.mimetype) || file.originalname.endsWith(".csv"))
+    cb(null, true);
+  else cb(new Error("Only CSV files are allowed for dataset upload"), false);
+};
+
 const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB per file
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter,
 });
-
-const zipUpload = multer({
+const zipUploadMulter = multer({
   storage,
-  limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB for ZIP
+  limits: { fileSize: 50 * 1024 * 1024 },
   fileFilter,
 });
+const datasetUploadMulter = multer({
+  storage,
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: csvFilter,
+});
 
-// Wraps multer to send clean JSON errors instead of Express default
 const wrap = (multerFn) => (req, res, next) => {
   multerFn(req, res, (err) => {
     if (!err) return next();
@@ -43,7 +51,7 @@ const wrap = (multerFn) => (req, res, next) => {
       if (err.code === "LIMIT_FILE_SIZE")
         return res
           .status(400)
-          .json({ success: false, message: "File too large. Max 10 MB." });
+          .json({ success: false, message: "File too large." });
       if (err.code === "LIMIT_FILE_COUNT")
         return res
           .status(400)
@@ -55,4 +63,5 @@ const wrap = (multerFn) => (req, res, next) => {
 
 export const uploadSingle = wrap(upload.single("resume"));
 export const uploadBulk = wrap(upload.array("resumes", 50));
-export const uploadZip = wrap(zipUpload.single("zip"));
+export const uploadZip = wrap(zipUploadMulter.single("zip"));
+export const uploadDataset = wrap(datasetUploadMulter.single("dataset"));

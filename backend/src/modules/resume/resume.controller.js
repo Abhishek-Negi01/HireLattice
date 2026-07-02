@@ -15,10 +15,17 @@ import {
   findAllByCandidateId,
   softDelete,
 } from "./resume.repository.js";
-import { findByClerkId, findById as findCandidateById } from "../candidate/candidate.repository.js";
+import {
+  findByClerkId,
+  findById as findCandidateById,
+} from "../candidate/candidate.repository.js";
 import CandidateAiProfile from "../candidate/candidateAiProfile.model.js";
 import { deleteCandidateVector } from "../../services/embeddings/vectorStore.js";
 import logger from "../../utils/logger.js";
+
+import prisma from "../../config/prisma.js";
+import * as repo from "./resume.repository.js";
+import RESUME_STATUS from "../../constants/resumeStatus.js";
 
 // POST /api/resumes/upload  — candidate uploads own resume
 export const uploadResume = asyncHandler(async (req, res) => {
@@ -57,7 +64,10 @@ export const uploadSingleForCandidate = asyncHandler(async (req, res) => {
   // Validate candidate existence in Postgres before running the processor
   const candidate = await findCandidateById(candidateId);
   if (!candidate) {
-    return sendNotFound(res, `Candidate with ID ${candidateId} does not exist in the database`);
+    return sendNotFound(
+      res,
+      `Candidate with ID ${candidateId} does not exist in the database`,
+    );
   }
 
   const result = await processAndStoreResume({
@@ -163,4 +173,111 @@ export const deleteResume = asyncHandler(async (req, res) => {
   await softDelete(resume.id);
 
   return sendSuccess(res, null, "Resume deleted");
+});
+
+import { parseDatasetBuffer } from "../../services/preprocessing/datasetParser.js";
+import { embedCandidate } from "../../services/embeddings/candidateEmbedding.js";
+import crypto from "crypto";
+
+// POST /api/resumes/upload-dataset — recruiter uploads CSV dataset
+export const datasetUpload = asyncHandler(async (req, res) => {
+  if (!req.file) return sendBadRequest(res, "No CSV file uploaded");
+
+  let rows;
+  try {
+    rows = parseDatasetBuffer(req.file.buffer);
+  } catch (err) {
+    return sendBadRequest(res, `CSV parsing failed: ${err.message}`);
+  }
+
+  const results = [];
+
+  for (const row of rows) {
+    try {
+      // Resolve or create candidate
+      let candidate = row.email
+        ? await prisma.candidate.findUnique({ where: { email: row.email } })
+        : null;
+
+      if (!candidate) {
+        const parts = (row.name || "Unknown").split(/\s+/);
+        candidate = await prisma.candidate.create({
+          data: {
+            clerkId: `dataset_${row.email || crypto.randomUUID()}`,
+            email:
+              row.email || `dataset_${crypto.randomUUID()}@hirelattice.local`,
+            firstName: parts[0] || "Unknown",
+            lastName: parts.slice(1).join(" ") || "Imported",
+          },
+        });
+      }
+
+      // Save resume record (no file URL — dataset row)
+      const resume = await repo.createResume({
+        candidateId: candidate.id,
+        fileUrl: "",
+        fileType: "csv",
+        fileHash: row.rawTextHash,
+        originalFileName: req.file.originalname,
+        status: RESUME_STATUS.PARSED,
+        parsedAt: new Date(),
+      });
+
+      await repo.deactivatePrevious(candidate.id, resume.id);
+
+      // Save AI profile to MongoDB
+      await CandidateAiProfile.findOneAndUpdate(
+        { candidateId: candidate.id, resumeId: resume.id },
+        {
+          ...row.profile,
+          candidateId: candidate.id,
+          resumeId: resume.id,
+          parsingModel: "dataset",
+          rawTextHash: row.rawTextHash,
+        },
+        { upsert: true, returnDocument: "after" },
+      );
+
+      // Embed
+      try {
+        const { pointId } = await embedCandidate(candidate.id, row.profile);
+        await repo.updateStatus(resume.id, RESUME_STATUS.INDEXED, {
+          indexedAt: new Date(),
+          embeddingPointId: pointId,
+        });
+        await CandidateAiProfile.updateOne(
+          { candidateId: candidate.id, resumeId: resume.id },
+          { embeddingPointId: pointId },
+        );
+      } catch (err) {
+        logger.warn(
+          `Embedding failed for dataset row ${row.email}: ${err.message}`,
+        );
+      }
+
+      results.push({
+        name: row.name,
+        email: row.email,
+        success: true,
+        candidateId: candidate.id,
+      });
+    } catch (err) {
+      logger.error(`Dataset row failed for ${row.email}: ${err.message}`);
+      results.push({
+        name: row.name,
+        email: row.email,
+        success: false,
+        reason: err.message,
+      });
+    }
+  }
+
+  const passed = results.filter((r) => r.success).length;
+  const failed = results.filter((r) => !r.success).length;
+
+  return sendCreated(
+    res,
+    { total: rows.length, passed, failed, results },
+    "Dataset uploaded",
+  );
 });

@@ -7,6 +7,7 @@ import {
   uploadBulk,
   uploadZip,
 } from "../../middlewares/upload.middleware.js";
+import { uploadDataset } from "../../middlewares/upload.middleware.js";
 import {
   uploadResume,
   uploadSingleForCandidate,
@@ -15,6 +16,7 @@ import {
   getMyResume,
   getResumeById,
   deleteResume,
+  datasetUpload,
 } from "./resume.controller.js";
 
 const router = Router();
@@ -44,6 +46,13 @@ router.post(
   requireRole(ROLES.RECRUITER),
   uploadZip,
   zipUpload,
+);
+router.post(
+  "/upload-dataset",
+  protect,
+  requireRole(ROLES.RECRUITER),
+  uploadDataset,
+  datasetUpload,
 );
 router.get("/:id", protect, requireRole(ROLES.RECRUITER), getResumeById);
 

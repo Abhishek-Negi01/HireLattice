@@ -1,14 +1,14 @@
-import React, { useRef, useState } from 'react';
-import styles from './style/UploadBox.module.scss';
-import { FiUploadCloud } from 'react-icons/fi';
+import React, { useRef, useState } from "react";
+import styles from "./style/UploadBox.module.scss";
+import { FiUploadCloud } from "react-icons/fi";
 
 export const UploadBox = ({
   onFilesSelected,
-  accept = '.pdf,.docx,.zip',
+  accept = ".pdf,.docx,.zip",
   multiple = false,
   disabled = false,
-  className = '',
-  maxSizeMsg = '15MB limit',
+  className = "",
+  maxSizeMsg = "15MB limit",
 }) => {
   const fileInputRef = useRef(null);
   const [dragActive, setDragActive] = useState(false);
@@ -16,9 +16,9 @@ export const UploadBox = ({
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
+    if (e.type === "dragenter" || e.type === "dragover") {
       setDragActive(true);
-    } else if (e.type === 'dragleave') {
+    } else if (e.type === "dragleave") {
       setDragActive(false);
     }
   };
@@ -65,8 +65,8 @@ export const UploadBox = ({
       onClick={handleClick}
       className={`
         ${styles.uploadZone}
-        ${dragActive ? styles.active : ''}
-        ${disabled ? styles.disabled : ''}
+        ${dragActive ? styles.active : ""}
+        ${disabled ? styles.disabled : ""}
         ${className}
       `}
     >
@@ -81,10 +81,11 @@ export const UploadBox = ({
       />
       <FiUploadCloud className={styles.uploadIcon} />
       <div className={styles.title}>
-        Drag & drop files here, or <span className={styles.browseLink}>browse</span>
+        Drag & drop files here, or{" "}
+        <span className={styles.browseLink}>browse</span>
       </div>
       <div className={styles.subtitle}>
-        Supports PDF, DOCX, and ZIP formats (up to {maxSizeMsg})
+        Supports PDF, DOCX, ZIP, and CSV formats (up to {maxSizeMsg})
       </div>
     </div>
   );
